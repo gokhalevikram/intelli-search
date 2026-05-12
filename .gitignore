@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Cache
+cache/
+
+# Model files
+classifier/document_classifier.pkl
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# OneDrive junk
+*.tmp
+*.lnk
+
+# PDFs and training data (optional)
+training_data/

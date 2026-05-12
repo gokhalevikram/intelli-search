@@ -1,0 +1,13 @@
+# Core ML + Embeddings
+sentence-transformers==2.6.0
+torch>=2.0.0
+
+# PDF text extraction
+pdfminer.six==20221105
+
+# Semantic search utilities
+scikit-learn==1.4.0
+
+# General utilities
+numpy>=1.26.0
+pandas>=2.1.0
