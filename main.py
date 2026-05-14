@@ -4,6 +4,7 @@ from crawler.file_crawler import FileCrawler
 from extractor.extractor import TextExtractor
 from extractor.pdf_strategy import PDFExtractionStrategy
 from extractor.text_strategy import TextFileExtractionStrategy
+from extractor.ocr_strategy import OCRExtractionStrategy
 from embedding.embedding_engine import EmbeddingEngine
 from index.document_index import DocumentIndex
 from search.search_engine import SearchEngine
@@ -14,7 +15,8 @@ import json
 import hashlib
 
 MAX_SIZE_MB = 5
-ALLOWED_EXT = {".pdf", ".txt"}
+ALLOWED_EXT = {".pdf", ".txt", ".jpg", ".jpeg", ".png"}
+
 CACHE_DIR = "cache"
 
 os.makedirs(CACHE_DIR, exist_ok=True)
@@ -54,6 +56,9 @@ def build_index(root_paths):
     extractor = TextExtractor()
     extractor.register_strategy("pdf", PDFExtractionStrategy())
     extractor.register_strategy("txt", TextFileExtractionStrategy())
+    
+    for ext in ["jpg", "jpeg", "png"]:
+        extractor.register_strategy(ext, OCRExtractionStrategy())
 
     embedder = EmbeddingEngine()
     index = DocumentIndex()

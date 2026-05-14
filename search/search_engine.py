@@ -8,6 +8,20 @@ class SearchEngine:
         self.index = index
         self.embedder = embedder
         self.classifier, self.label_map = joblib.load("classifier/document_classifier.pkl")
+        self.NORMALIZATION_MAP = {
+            "payslip": "paystub",
+            "salary slip": "paystub",
+            "salaryslip": "paystub",
+            "w-2": "w2",
+            "w 2": "w2",
+            "1040": "tax_return",
+            "tax": "tax_return",
+            "passport scan": "passport",
+            "driver license": "drivers_license",
+            "drivers license": "drivers_license",
+            "dl": "drivers_license",
+        }
+
 
     def compute_score(self, query_embedding, doc, keyword):
         filename = doc["file"]
@@ -47,7 +61,9 @@ class SearchEngine:
     def search(self, query, top_k=5):
         query_emb = self.embedder.embed(query)
         results = []
-        keyword = query.lower()
+        keyword = query.lower().strip()
+        keyword = self.NORMALIZATION_MAP.get(keyword, keyword)
+        
         for doc in self.index.index:
             score = self.compute_score(query_emb, doc, keyword)
 
